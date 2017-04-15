@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template • TodoMVC</title>
+		<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+		<!-- CSS overrides - remove if you don't need it -->
+		<link rel="stylesheet" href="css/app.css">
+	</head>
+	<body>
+		<section class="todoapp" ng-app="appModule" ng-controller="mainController">
+			<header class="header">
+				<h1>todos</h1>
+				<form ng-submit="item()">
+					<input class="new-todo" ng-model="arr.name" placeholder="需要什么？" autofocus>
+				</form>
+			</header>
+			<!-- This section should be hidden by default and shown when there are todos -->
+			<section class="main">
+				<input id="toggle-all" class="toggle-all" ng-model="isLiked" type="checkbox">
+				<label for="toggle-all">Mark all as complete</label>
+				<ul class="todo-list">
+					<!-- These are here just to show the structure of the list items -->
+					<!-- List items should get the class `editing` when editing and `completed` when marked as completed -->
+					<li ng-class="{completed:arr.completed}" ng-repeat="arr in arrs">
+						<div class="view">
+							<input class="toggle" type="checkbox" ng-checked="	" ng-model="arr.completed">
+							<label>{{arr.name}}</label>
+							<button class="destroy"></button>
+						</div>
+						<input class="edit" value="Create a TodoMVC template">
+					</li>
+				</ul>
+			</section>
+			<!-- This footer should hidden by default and shown when there are todos -->
+			<footer class="footer">
+				<!-- This should be `0 items left` by default -->
+				<span class="todo-count"><strong>{{arrs.length}}</strong> item left</span>
+				<!-- Remove this if you don't implement routing -->
+				<ul class="filters">
+					<li>
+						<a class="selected" href="#/">All</a>
+					</li>
+					<li>
+						<a href="#/active">Active</a>
+					</li>
+					<li>
+						<a href="#/completed">Completed</a>
+					</li>
+				</ul>
+				<!-- Hidden if no completed items are left ↓ -->
+				<button class="clear-completed">Clear completed</button>
+			</footer>
+		</section>
+		<footer class="info">
+			<p>Double-click to edit a todo</p>
+			<!-- Remove the below line ↓ -->
+			<p>Template by <a href="http://sindresorhus.com">Sindre Sorhus</a></p>
+			<!-- Change this out with your name and url ↓ -->
+			<p>Created by <a href="http://todomvc.com">you</a></p>
+			<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+		</footer>
+		<!-- Scripts here. Don't remove ↓ -->
+		<script src="node_modules/angular/angular.min.js"></script>
+		<script>
+			angular.module('appModule',[]).
+			controller("mainController",["$scope",function($scope){
+				function id(){
+					var id = Math.random();
+					return id;
+				};
+				$scope.arr = {
+					name:"",
+					id:id(),
+					completed:false
+				};
+				$scope.arrs = [
+					{name:"上课",id:id(),completed:false},
+					{name:"吃饭",id:id(),completed:true},
+					{name:"睡觉",id:id(),completed:false}
+				];
+				$scope.item = function(){
+					if ($scope.arr.name == "") {
+						return;
+					}else{
+						$scope.arrs.push($scope.arr);
+						// $scope.arr.name = "";
+					}
+					
+				}
+
+			}]);
+		</script>
+		<!-- <script src="js/app.js"></script> -->
+	</body>
+</html>
